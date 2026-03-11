@@ -1,12 +1,10 @@
 import './App.css'
-import Login from './pages/Login/Login'
+import { Router } from './router/router'
 
 function App() {
 
   return (
-    <div className="App">
-      <Login />
-    </div>
+    <Router />
   )
 }
 
