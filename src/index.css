@@ -3,3 +3,6 @@
 @tailwind utilities;
 
 
+body {
+ @apply transition-colors bg-gray-100 dark:bg-gray-900;
+}
