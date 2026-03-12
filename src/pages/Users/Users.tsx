@@ -54,7 +54,6 @@ export default function Users() {
       <div className="bg-white shadow dark:bg-gray-800 rounded-xl">
         <div className="bg-white shadow dark:bg-gray-800 rounded-xl">
           <table className="w-full">
-            {/* HEADER some no mobile */}
 
             <thead className="hidden md:table-header-group bg-gray-50 dark:bg-gray-700">
               <tr>
