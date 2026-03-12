@@ -1,30 +1,47 @@
 import { useForm } from "react-hook-form";
 import { useApp } from "../../context/AppContext";
 import {
-  depositSchema,
-  type DepositFormInput,
-} from "../../schemas/depositSchema";
+  transactionSchema,
+  type TransactionFormInput,
+} from "../../schemas/transactionSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
+import type { TransactionType } from "../../types/transaction";
 
-export default function DepositForm() {
-  const { users, deposit } = useApp();
+interface TransactionProps{
+  type: TransactionType
+}
+
+
+export default function TransactionForm({type}: TransactionProps) {
+  const { users, deposit, withdraw } = useApp();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<DepositFormInput>({
-    resolver: zodResolver(depositSchema),
+  } = useForm<TransactionFormInput>({
+    resolver: zodResolver(transactionSchema),
   });
 
-  function onSubmit(data: DepositFormInput) {
-    const parsed = depositSchema.parse(data);
+  function onSubmit(data: TransactionFormInput) {
+    const parsed = transactionSchema.parse(data);
 
-    deposit(parsed);
-    reset();
-    toast.success("Operação realizada com sucesso!");
+    try {
+      if (type === "DEPOSIT") {
+        deposit(parsed)
+        toast.success("Depósito de " + data.amount + " " + data.asset + " Realizado com sucesso");
+      }
+
+      if (type === "WITHDRAW") {
+        withdraw(parsed)
+        toast.success("Saque de " + data.amount + " " + data.asset + " Realizado com sucesso");
+      }
+      reset();
+    } catch (error: any) {
+      toast.error(error.message);
+    }
   }
 
   return (
@@ -100,7 +117,7 @@ export default function DepositForm() {
           type="submit"
           className="w-full py-2 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700"
         >
-          Confirmar depósito
+          {type === "DEPOSIT" ? "Confirmar depósito" : "Confirmar saque"}
         </button>
       </form>
     </div>

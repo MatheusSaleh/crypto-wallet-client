@@ -11,10 +11,18 @@ interface DepositInput {
     note?: string;
 }
 
+interface WithdrawInput {
+    userId: string 
+    asset: Asset
+    amount: number 
+    note?: string
+}
+
 interface AppContextType {
     users: User[];
     transactions: Transaction[];
     deposit: (data: DepositInput) => void;
+    withdraw: (data: WithdrawInput) => void;
 }
 
 const AppContext = createContext<AppContextType | null>(null);
@@ -66,8 +74,52 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         
     }
 
+    function withdraw({ userId, asset, amount, note }: WithdrawInput){
+
+        if (amount <= 0) {
+            throw new Error("Valor Inválido");
+        }
+
+        const user = users.find(u => u.id === userId);
+
+        if(!user){
+            throw new Error("Usuário não encontrado");
+        }
+
+        if(user.balances[asset] < amount){
+            throw new Error("Saldo insuficiente");
+        }
+
+        const updatedUsers = users.map(u => {
+
+            if (u.id !== userId) return u 
+
+            return {
+                ...u, 
+                balances: {
+                    ...u.balances,
+                    [asset]: u.balances[asset] - amount
+                }
+            }
+        })
+
+        setUsers(updatedUsers);
+
+        const newTransaction: Transaction = {
+            id: crypto.randomUUID(),
+            userId,
+            asset, 
+            amount, 
+            type: "WITHDRAW",
+            note,
+            createdAt: new Date()
+        }
+
+        setTransactions(prev => [...prev, newTransaction])
+    }
+
     return (
-        <AppContext.Provider value={{ users, transactions, deposit }}>
+        <AppContext.Provider value={{ users, transactions, deposit, withdraw }}>
             {children}
         </AppContext.Provider>
     )

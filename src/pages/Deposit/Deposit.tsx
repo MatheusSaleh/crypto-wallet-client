@@ -1,5 +1,5 @@
-import BalancesTable from "../../components/deposit/BalancesTable";
-import DepositForm from "../../components/deposit/DepositForm";
+import BalancesTable from "../../components/transaction/BalancesTable";
+import TransactionForm from "../../components/transaction/TransactionForm";
 import { useApp } from "../../context/AppContext";
 
 export default function Deposit() {
@@ -7,12 +7,12 @@ export default function Deposit() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2x1 font-bold text-gray-800 dark:text-white">
+      <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
         Depósitos
-      </h1>
+      </h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-full">
-        <DepositForm />
+        <TransactionForm type="DEPOSIT"/>
         <BalancesTable users={users} />
       </div>
     </div>
