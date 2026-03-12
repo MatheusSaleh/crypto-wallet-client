@@ -1,5 +1,6 @@
 import BalancesTable from "../../components/transaction/BalancesTable";
 import TransactionForm from "../../components/transaction/TransactionForm";
+import TransactionsTable from "../../components/transaction/TransactionsTable";
 import { useApp } from "../../context/AppContext";
 
 export default function Deposit() {
@@ -15,6 +16,8 @@ export default function Deposit() {
         <TransactionForm type="DEPOSIT"/>
         <BalancesTable users={users} />
       </div>
+
+      <TransactionsTable/>
     </div>
   );
 }
