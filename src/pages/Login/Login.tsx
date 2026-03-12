@@ -29,9 +29,9 @@ export default function Login() {
 
       <button
         onClick={toggleTheme}
-        className="absolute px-4 py-2 bg-white rounded-lg shadow top-6 right-6 dark:bg-gray-700"
+        className="absolute px-4 py-2 text-black bg-white rounded-lg shadow top-6 right-6 dark:bg-gray-700 dark:text-white"
       >
-        {theme === "light" ? "🌙 Dark" : "☀️ Light"}
+        {theme === "light" ? "🌙 Tema Escuro" : "☀️ Tema Claro"}
       </button>
 
       <form
