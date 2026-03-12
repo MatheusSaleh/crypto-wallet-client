@@ -49,33 +49,36 @@ export default function Sidebar() {
     {links.map(({ to, label, icon: Icon }) => (
 
      <NavLink
-      key={to}
-      to={to}
-      className={({ isActive }) =>
-       `
-       flex items-center
-       ${collapsed ? "justify-center" : "gap-3"}
-       px-3 py-2 rounded-lg
-       transition
-
-       text-gray-700 dark:text-white
-
-       ${isActive
+  key={to}
+  to={to}
+  className={({ isActive }) =>
+    `
+    relative group
+    flex items-center
+    ${collapsed ? "justify-center" : "gap-3"}
+    px-3 py-2 rounded-lg
+    transition
+    text-gray-700 dark:text-white
+    ${
+      isActive
         ? "bg-blue-500 text-white"
         : "hover:bg-gray-100 dark:hover:bg-gray-700"
-       }
-       `
-      }
-     >
+    }
+    `
+  }
+>
+  <Icon size={20} />
 
+  {!collapsed && <span>{label}</span>}
 
-      <Icon size={20} />
-
-      {!collapsed && (
-       <span>{label}</span>
-      )}
-
-     </NavLink>
+  {collapsed && (
+    <span
+      className="absolute px-2 py-1 text-xs text-white transition-transform scale-0 bg-gray-900 rounded shadow-lg left-14 whitespace-nowrap group-hover:scale-100"
+    >
+      {label}
+    </span>
+  )}
+</NavLink>
 
     ))}
 
