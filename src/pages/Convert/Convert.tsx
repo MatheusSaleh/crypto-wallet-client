@@ -1,9 +1,19 @@
+import ConversionCard from "../../components/conversion/ConversionCard";
+
 export default function Convert() {
-    return (
-        <div>
-            <h1 className="font-bold text-gray-800 text-2x1 dark:text-white">
-                Conversões
-            </h1>
-        </div>
-    )
+
+ return (
+
+  <div className="space-y-6">
+
+   <h2 className="text-2xl font-bold dark:text-white">
+    Conversão
+   </h2>
+
+   <ConversionCard />
+
+  </div>
+
+ )
+
 }
