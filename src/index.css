@@ -6,3 +6,23 @@
 body {
  @apply transition-colors bg-gray-100 dark:bg-gray-900;
 }
+/* Letreiro de cotações (TickerTape).
+   A lista é renderizada duas vezes, então deslocar -50% fecha o loop sem "pulo". */
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.ticker-track {
+  animation: ticker-scroll var(--ticker-duration, 80s) linear infinite;
+}
+
+.ticker-viewport:hover .ticker-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    animation: none;
+  }
+}

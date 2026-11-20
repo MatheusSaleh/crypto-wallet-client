@@ -1,18 +1,11 @@
-export type UserStatus = "ACTIVE" | "PENDING" | "BLOCKED";
-
+/** GET /users/me */
 export interface User {
+  id: string;
+  email: string;
+  createdAt: string;
+}
 
-    id: string;
-    name: string;
-    email: string;
-    status: UserStatus,
-    createdIn: string;
-    lastActivity: string;
-
-    balances: {
-        BRL: number;
-        BTC: number;
-        ETH: number;
-        USDT: number;
-    }
+export interface AuthTokens {
+  accessToken: string;
+  refreshToken: string;
 }

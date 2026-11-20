@@ -1,1 +1,0 @@
-export const assets = ["BRL", "BTC", "ETH", "USDT"]

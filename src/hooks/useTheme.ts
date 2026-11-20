@@ -1,30 +1,21 @@
 import { useEffect, useState } from "react";
 
+type Theme = "light" | "dark";
+
 export function useTheme() {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+  // Lê o tema salvo na inicialização, sem setState dentro de efeito
+  const [theme, setTheme] = useState<Theme>(() =>
+    localStorage.getItem("theme") === "dark" ? "dark" : "light",
+  );
 
+  // Sincroniza o DOM e o localStorage com o estado
   useEffect(() => {
-    const saved = localStorage.getItem("theme");
-
-    if (saved === "dark") {
-      setTheme("dark");
-      document.documentElement.classList.add("dark");
-    }
-  }, []);
+    document.documentElement.classList.toggle("dark", theme === "dark");
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
   function toggleTheme() {
-
-    const newTheme = theme === "light" ? "dark" : "light";
-
-    setTheme(newTheme);
-
-    if (newTheme === "dark"){
-        document.documentElement.classList.add("dark");
-    } else {
-        document.documentElement.classList.remove("dark");
-    }
-
-    localStorage.setItem("theme", newTheme);
+    setTheme((current) => (current === "light" ? "dark" : "light"));
   }
 
   return { theme, toggleTheme };

@@ -1,18 +1,52 @@
-export type Asset = "BRL" | "BTC" | "ETH" | "USDT";
+/** Tokens suportados pelo crypto-wallet-server */
+export const ASSETS = ["BRL", "BTC", "ETH"] as const;
 
-export type TransactionType = "DEPOSIT" | "WITHDRAW";
+export type Asset = (typeof ASSETS)[number];
 
-/**
- * @author: Matheus Saleh
- * @description: Esta interface representa uma transação financeira, que pode ser um depósito ou um saque. Cada transação possui um identificador único, o ID do usuário associado, o ativo envolvido (BRL, BTC, ETH ou USDT), o valor da transação, o tipo (DEPOSIT ou WITHDRAW), uma nota opcional e a data de criação. Esta estrutura é fundamental para registrar e gerenciar as transações financeiras dos usuários na plataforma.
- */
-export interface Transaction {
-  id: string;
-  user?: string;
-  userId: string;
-  type: TransactionType;
-  asset: Asset;
+/** GET /wallet/balance */
+export interface Balance {
+  token: Asset;
+  balance: number;
+}
+
+export type LedgerType =
+  | "DEPOSIT"
+  | "WITHDRAWAL"
+  | "SWAP_IN"
+  | "SWAP_OUT"
+  | "SWAP_FEE";
+
+/** GET /ledger */
+export interface LedgerEntry {
+  type: LedgerType;
+  token: Asset;
   amount: number;
-  note?: string;
-  createdAt: Date;
+  previousBalance: number;
+  newBalance: number;
+  createdAt: string;
+}
+
+/** GET /swap/quote */
+export interface SwapQuote {
+  price: number;
+  amount: number;
+  fee: number;
+}
+
+/** POST /swap */
+export interface SwapResult {
+  fromToken: Asset;
+  toToken: Asset;
+  amount: number;
+  received: number;
+  fee: number;
+}
+
+/** GET /market/ticker */
+export interface TickerItem {
+  symbol: string;
+  name: string;
+  type: "crypto" | "fiat";
+  priceBrl: number;
+  change24h: number | null;
 }

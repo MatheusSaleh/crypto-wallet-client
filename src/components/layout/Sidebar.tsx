@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 import {
   Home,
-  Users,
+  ScrollText,
   ArrowDownCircle,
   ArrowUpCircle,
   Repeat,
@@ -15,7 +15,7 @@ export default function Sidebar() {
 
   const links = [
     { to: "/dashboard/home", label: "Home", icon: Home },
-    { to: "/dashboard/users", label: "Usuários", icon: Users },
+    { to: "/dashboard/history", label: "Extrato", icon: ScrollText },
     { to: "/dashboard/deposit", label: "Depósito", icon: ArrowDownCircle },
     { to: "/dashboard/withdraw", label: "Saque", icon: ArrowUpCircle },
     { to: "/dashboard/convert", label: "Conversão", icon: Repeat },
@@ -40,7 +40,7 @@ export default function Sidebar() {
 
       {!collapsed && (
         <h2 className="mb-6 text-xl font-bold text-gray-800 dark:text-white">
-          Crypto Admin
+          Crypto Wallet
         </h2>
       )}
 

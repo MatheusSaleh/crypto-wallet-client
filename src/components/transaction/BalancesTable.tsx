@@ -1,62 +1,34 @@
-import type { User } from "../../types/user";
+import { useBalance } from "../../hooks/useWallet";
+import { getErrorMessage } from "../../services/api";
+import { formatAmount } from "../../utils/format";
 
-type BalancesTableProps = {
-  users: User[];
-};
+export default function BalancesTable() {
+  const { data: balances, isLoading, error } = useBalance();
 
-export default function BalancesTable({ users }: BalancesTableProps) {
   return (
     <div className="p-6 bg-white shadow rounded-xl dark:bg-gray-800">
-      <h2 className="mb-4 font-semibold dark:text-white">Saldo por usuário</h2>
+      <h2 className="mb-4 font-semibold dark:text-white">Meus saldos</h2>
 
-      <div className="overflow-x-auto">
+      {isLoading && <p className="text-sm text-gray-500">Carregando...</p>}
 
-        <table className="w-full text-sm">
+      {error && (
+        <p className="text-sm text-red-500">
+          {getErrorMessage(error, "Erro ao carregar saldos")}
+        </p>
+      )}
 
-            <thead className="border-b dark:border-gray-700">
-
-                <tr className="text-left">
-
-                    <th className="p-2 dark:text-white">Usuário</th>
-                    <th className="p-2 dark:text-white">BRL</th>
-                    <th className="p-2 dark:text-white">BTC</th>
-                    <th className="p-2 dark:text-white">ETH</th>
-                    <th className="p-2 dark:text-white">USDT</th>
-                </tr>
-            </thead>
-
-            <tbody>
-
-                {users.map((user) => (
-
-                    <tr
-                        key={user.id}
-                        className="border-b dark:border-gray-700"
-                    >
-
-                        <td className="p-2 dark:text-white">
-                            {user.name}
-                        </td>
-
-                        <td className="p-2 dark:text-white">
-                            {user.balances.BRL}
-                        </td>
-
-                        <td className="p-2 dark:text-white">
-                            {user.balances.BTC}
-                        </td>
-
-                        <td className="p-2 dark:text-white">
-                            {user.balances.ETH}
-                        </td>
-
-                        <td className="p-2 dark:text-white">
-                            {user.balances.USDT}
-                        </td>
-                    </tr>
-                ))}
-            </tbody>
-        </table>
+      <div className="space-y-3">
+        {balances?.map((b) => (
+          <div
+            key={b.token}
+            className="flex justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-700"
+          >
+            <span className="dark:text-white">{b.token}</span>
+            <span className="font-medium dark:text-white">
+              {formatAmount(b.balance, b.token)}
+            </span>
+          </div>
+        ))}
       </div>
     </div>
   );
