@@ -4,6 +4,10 @@ Aplicação web em **React + TypeScript** para gerenciar uma **carteira de cript
 
 O frontend consome a API [crypto-wallet-server](https://github.com/MatheusSaleh/crypto-wallet-server) (NestJS + PostgreSQL), que cuida da autenticação, dos saldos e do registro contábil de cada operação.
 
+> 🌐 **Acesse em produção:** https://crypto-wallet-client-pink.vercel.app
+>
+> 📘 **API (Swagger):** https://crypto-wallet-server-kappa.vercel.app/docs
+
 ---
 
 ## Sumário
@@ -12,6 +16,7 @@ O frontend consome a API [crypto-wallet-server](https://github.com/MatheusSaleh/
 - [Funcionalidades](#funcionalidades)
 - [Tecnologias](#tecnologias)
 - [Como rodar](#como-rodar)
+- [Deploy](#deploy)
 - [Arquitetura](#arquitetura)
 - [Integração com a API](#integração-com-a-api)
 - [Estrutura do projeto](#estrutura-do-projeto)
@@ -160,6 +165,16 @@ Acesse **http://localhost:5173**, clique em **"Não tem conta? Cadastre-se"** e 
 | `pnpm run build` | Checagem de tipos e build de produção em `dist/` |
 | `pnpm run preview` | Serve o build de produção localmente |
 | `pnpm run lint` | ESLint |
+
+---
+
+## Deploy
+
+O frontend está publicado na **Vercel**, conectado ao repositório: cada push no `master` gera um novo deploy de produção.
+
+- **`VITE_API_URL`** está configurada no projeto da Vercel apontando para `https://crypto-wallet-server-kappa.vercel.app`. Como variáveis `VITE_*` entram no bundle durante o build, alterá-la exige um novo deploy.
+- O [`vercel.json`](vercel.json) redireciona todas as rotas para o `index.html`, então endereços como `/dashboard/home` funcionam ao recarregar a página ou abrir o link direto.
+- A API precisa ter a URL do frontend em `CORS_ORIGIN`.
 
 ---
 
